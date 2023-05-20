@@ -38,4 +38,12 @@ io.on('connection', (client) => {
         client.broadcast.emit('listaPersona', usuarios.getPersonas());
     });
 
+    // Mensajes privados
+    client.on('mensajePrivado', data => {
+
+        persona = usuarios.getPersona( client.id );
+
+        client.broadcast.to(data.para).emit( 'mensajePrivado', crearMensaje( persona.nombre, data.mensaje ) );
+    })
+
 });
